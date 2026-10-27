@@ -10,6 +10,8 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{microtype}
+\Urlmuskip=0mu plus 1mu\relax
+\def\UrlBreaks{\do\/\do\-\do\.\do\_}
 
 % Highlighted placeholder for anything not finished yet.
 % Search the file for \todo{ before submitting: there must be none left.
@@ -93,6 +95,7 @@ replication runs.
 \begin{table}[t]
 \centering
 \small
+\resizebox{\ifdim\width>\columnwidth\columnwidth\else\width\fi}{!}{%
 \begin{tabular}{lrrr}
 \toprule
 Dataset & \#Users & \#Items & Avg.\ Len \\
@@ -104,7 +107,7 @@ Yelp   & 30{,}431 & 20{,}033 & 10.4 \\
 Home   & 66{,}519 & 28{,}237 & 8.3 \\
 ML-1M  & 6{,}040  & 3{,}706  & 165.6 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \caption{Original dataset statistics reported by \citet{dang2024repeated}. $^\dagger$The data file in the official repository has 35{,}598 users, so the paper's 35{,}958 is probably a typo.}
 \label{tab:datasets}
 \end{table}
@@ -145,6 +148,7 @@ with; it only shows that the direction agrees with the paper's claim.
 \begin{table}[t]
 \centering
 \small
+\resizebox{\ifdim\width>\columnwidth\columnwidth\else\width\fi}{!}{%
 \begin{tabular}{lrrr}
 \toprule
 Metric & Baseline & RepPad & Gain \\
@@ -154,7 +158,7 @@ NDCG@5  & .0328 $\pm$ .0022 & \textbf{.0357} $\pm$ .0024 & +9.0\% \\
 HR@10   & .0669 $\pm$ .0033 & \textbf{.0747} $\pm$ .0041 & +11.8\% \\
 NDCG@10 & .0391 $\pm$ .0011 & \textbf{.0431} $\pm$ .0023 & +10.1\% \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \caption{SASRec on LastFM with the official code, mean $\pm$ std over 10 seeds.}
 \label{tab:lastfm}
 \end{table}
@@ -238,6 +242,7 @@ the environment where we worked, so we do not claim more.
 \begin{table}[t]
 \centering
 \small
+\resizebox{\ifdim\width>\columnwidth\columnwidth\else\width\fi}{!}{%
 \begin{tabular}{lrrrrr}
 \toprule
 Dataset & \#Users & \#Items & \#Inter. & Avg.\ Len & Sparsity \\
@@ -245,7 +250,7 @@ Dataset & \#Users & \#Items & \#Inter. & Avg.\ Len & Sparsity \\
 LastFM (existing) & 1{,}090 & 3{,}646 & 52{,}551 & 48.2 & 0.987 \\
 GitHub (ours)     & 1{,}421 & 972     & 31{,}783 & 22.4 & 0.977 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \caption{Datasets outside the paper, after 5-core filtering (statistics computed from the files used in our runs).}
 \label{tab:newdata}
 \end{table}
@@ -295,12 +300,18 @@ The collection script writes a CSV with the columns \texttt{user,item,timestamp}
 salted hash and \texttt{timestamp} is the time of the star in UTC. The conversion script turns it into the
 RepPad text format below (user id, then the repository ids in time order, shortened here) and a separate item map.
 We show only indexed rows and not rows of the raw CSV, since these would pair a pseudonym with real timestamps.
+{\footnotesize
 \begin{verbatim}
-GitHub.txt            GitHub_item_map.csv
-1 1 2 3 4 5 6 7       item_id,repository
-3 47 48 19 49 50      1,DopplerHQ/awesome-interview-questions
-                      3,freeCodeCamp/freeCodeCamp
+GitHub.txt
+1 1 2 3 4 5 6 7
+3 47 48 19 49 50
+
+GitHub_item_map.csv (excerpt)
+item_id,repository
+2,ionic-team/ionic-framework
+3,freeCodeCamp/freeCodeCamp
 \end{verbatim}
+}
 
 
 \section{Results on New Data}
@@ -350,6 +361,7 @@ there is more padding to fill) but not in sign.
 
 \begin{table}[t]
 \centering\small
+\resizebox{\ifdim\width>\columnwidth\columnwidth\else\width\fi}{!}{%
 \begin{tabular}{lrccc}
 \hline
 History length & Users & HR@10 base & RepPad & Change \\
@@ -358,7 +370,7 @@ History length & Users & HR@10 base & RepPad & Change \\
 11--24 & 491 & .1430 & .1141 & $-$20.2\% \\
 25--123 & 478 & .1444 & .1096 & $-$24.1\% \\
 \hline
-\end{tabular}
+\end{tabular}}
 \caption{GitHub: HR@10 by history length (mean over 5 re-runs).}
 \label{tab:github_len}
 \end{table}
@@ -374,6 +386,7 @@ runs, so the per-group differences are indicative and we did not test them.
 
 \begin{table}[t]
 \centering\small
+\resizebox{\ifdim\width>\columnwidth\columnwidth\else\width\fi}{!}{%
 \begin{tabular}{lrccc}
 \hline
 History length & Users & HR@10 base & RepPad & Change \\
@@ -382,7 +395,7 @@ History length & Users & HR@10 base & RepPad & Change \\
 11--34 & 378 & .0656 & .0730 & +11.3\% \\
 35--899 & 370 & .0443 & .0546 & +23.2\% \\
 \hline
-\end{tabular}
+\end{tabular}}
 \caption{LastFM: HR@10 by history length (mean over 5 re-runs).}
 \label{tab:lastfm_len}
 \end{table}
@@ -404,6 +417,7 @@ by length group point in opposite directions. With four datasets we cannot say m
 
 \begin{table}[t]
 \centering\small
+\resizebox{\ifdim\width>\columnwidth\columnwidth\else\width\fi}{!}{%
 \begin{tabular}{lrrr}
 \toprule
 Dataset & Avg.\ len & Seeds & HR@10 change \\
@@ -413,7 +427,7 @@ Beauty (paper) & 8.9 & 5 & +21.5\% \\
 GitHub (new) & 22.4 & 10 / 5 & $-$12.3\% / $-$18.9\% \\
 LastFM (ext.) & 48.2 & 10 / 5 & +11.8\% / +12.7\% \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \caption{RepPad vs.\ baseline across datasets (HR@10, relative change). Two values are the first set of
 seeds and the later re-runs.}
 \label{tab:summary}
