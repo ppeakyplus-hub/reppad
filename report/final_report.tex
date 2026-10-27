@@ -35,7 +35,7 @@ sequences with repeated copies of the user's own history instead of zeros. We
 first check whether the original claim holds with the authors' official code,
 then test it on new data, including a new dataset of GitHub repository-starring
 sequences that we constructed. With the official code, RepPad improved SASRec clearly on Beauty (HR@10 +21.5\% over 5 seeds), Toys (+11.6\%, 3 seeds) and LastFM (+12--13\%), in the same direction as the paper but with different sizes. On our GitHub data it was \emph{worse} than the baseline by 11--19\% (10 and 5 seeds), and a blind LLM-as-judge found no difference in relevance between the two systems' lists.
-All code and scripts are available in our public repository.\footnote{\todo{GitHub repository URL; make it public before submitting.}}
+All code and scripts are available in our public repository.\footnote{\url{https://github.com/ppeakyplus-hub/reppad}}
 \end{abstract}
 
 \section{Introduction}
@@ -79,8 +79,6 @@ which CORE ranks A \citep{core2023recsys} after being promoted from B in 2021
 authors release code for both backbones,\footnote{\url{https://github.com/KingGugu/RepPad}}
 so any difference between our results and the paper is easier to investigate.
 It has also attracted follow-up work \citep{dang2024reppadplus,dangzhifu2025payattention,dang2024survey}.
-\todo{add citation count from Google Scholar, with the date you checked it, and
-the Google Scholar venue ranking if you want a second quality indicator.}
 
 \section{Description of the Original Datasets}
 
@@ -89,7 +87,7 @@ The paper evaluates on six public datasets: four Amazon review categories
 MovieLens-1M \citep{harper2015movielens}.\footnote{Amazon: \url{https://jmcauley.ucsd.edu/data/amazon/}; Yelp: \url{https://www.yelp.com/dataset}; MovieLens-1M: \url{https://grouplens.org/datasets/movielens/1m/}. We used the already processed files shipped with the official code and did not download the raw data.}
 Table~\ref{tab:datasets} gives the statistics reported in the paper. The Amazon
 and Yelp datasets are short-sequence (average length 8--10), whereas ML-1M is
-long (165.6). The official code also ships LastFM, which we use for our first
+long (165.6). (The abstract says ``five datasets'', but Section~3.2 and Table~3 of the paper list six, and the main results tables label five of them as short-sequence datasets.) The official code also ships LastFM, which we use for our first
 replication runs.
 
 \begin{table}[t]
@@ -101,13 +99,13 @@ Dataset & \#Users & \#Items & Avg.\ Len \\
 \midrule
 Toys   & 19{,}412 & 11{,}924 & 8.6 \\
 Beauty & 22{,}363 & 12{,}101 & 8.9 \\
-Sports & 35{,}598 & 18{,}357 & 8.3 \\
+Sports & 35{,}958$^\dagger$ & 18{,}357 & 8.3 \\
 Yelp   & 30{,}431 & 20{,}033 & 10.4 \\
 Home   & 66{,}519 & 28{,}237 & 8.3 \\
 ML-1M  & 6{,}040  & 3{,}706  & 165.6 \\
 \bottomrule
 \end{tabular}
-\caption{Original dataset statistics reported by \citet{dang2024repeated}.}
+\caption{Original dataset statistics reported by \citet{dang2024repeated}. $^\dagger$The data file in the official repository has 35{,}598 users, so the paper's 35{,}958 is probably a typo.}
 \label{tab:datasets}
 \end{table}
 
@@ -465,8 +463,9 @@ script that builds and scores the blind sample are in the repository.
 
 \section{Ethical Considerations}
 
-Ethics sections are often a one-line disclaimer: in ACL 2021 long papers only
-about 16\% had one, and about 20\% of those addressed neither benefits nor harms
+Ethics sections are often a one-line disclaimer: in ACL 2021 only
+about 16\% of the papers had one, and about 20\% of those did not address any of the
+benefits, harms or vulnerable groups that the authors looked for
 \citep{benotti2022ethics}. A large corpus of ACL ethics statements likewise
 finds that more than a third identify no issue at all, and groups the concerns
 that do appear into bias, misuse, privacy, misinformation, toxicity and
@@ -481,8 +480,7 @@ RepPad is trained and evaluated on public interaction logs (product reviews,
 business reviews, movie ratings and music listening histories). These are
 behavioural records of real people. Although the user identifiers are pseudonymous, sparse
 interaction histories can sometimes be linked back to individuals, so
-\emph{privacy} is the main concern. \todo{Check the RepPad paper and say whether
-it contains an ethics statement.} The second concern is \emph{bias}.
+\emph{privacy} is the main concern. In the arXiv version of the paper that we read we found no ethics statement or ethical-considerations section; its only limitations discussion (Section~2.5.2) is technical. We did not check whether the published ACM version adds one. The second concern is \emph{bias}.
 Recommenders trained on logs tend to favour users with long histories and popular
 items. RepPad is interesting here because its mechanism gives short-history users
 more training signal (Section~2), which may reduce this under-representation. The
