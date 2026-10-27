@@ -1,0 +1,9 @@
+github_data/
+.salt
+users_queue.txt
+done_ids.txt
+GitHub.txt
+results/per_user/
+*.token
+.env
+__pycache__/
